@@ -16,7 +16,7 @@ module PublicActivity
           belongs_to :recipient, :polymorphic => true
         end
         # Serialize parameters Hash
-        serialize :parameters, Hash
+        serialize :parameters, JSON
 
         if ::ActiveRecord::VERSION::MAJOR < 4 || defined?(ProtectedAttributes)
           attr_accessible :key, :owner, :parameters, :recipient, :trackable
