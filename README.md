@@ -1,14 +1,19 @@
 # PublicActivity
-## [![Gittip](http://img.shields.io/gittip/pokonski.svg)](https://www.gittip.com/pokonski/) [![Build Status](http://img.shields.io/travis/pokonski/public_activity/master.svg)](http://travis-ci.org/pokonski/public_activity) [![Coverage Status](http://img.shields.io/coveralls/pokonski/public_activity.svg)](https://coveralls.io/r/pokonski/public_activity) [![Code Climate](http://img.shields.io/codeclimate/github/pokonski/public_activity.svg)](https://codeclimate.com/github/pokonski/public_activity) [![Gem Version](http://img.shields.io/gem/v/public_activity.svg)](http://badge.fury.io/rb/public_activity) [![Inline docs](http://inch-ci.org/github/pokonski/public_activity.png)](http://inch-ci.org/github/pokonski/public_activity)
+## [![Build Status](https://travis-ci.org/chaps-io/public_activity.svg?branch=master)](https://travis-ci.org/chaps-io/public_activity) [![Coverage Status](http://img.shields.io/coveralls/pokonski/public_activity.svg)](https://coveralls.io/r/pokonski/public_activity) [![Code Climate](http://img.shields.io/codeclimate/github/pokonski/public_activity.svg)](https://codeclimate.com/github/pokonski/public_activity) [![Gem Version](http://img.shields.io/gem/v/public_activity.svg)](http://badge.fury.io/rb/public_activity) [![Inline docs](http://inch-ci.org/github/pokonski/public_activity.png)](http://inch-ci.org/github/pokonski/public_activity) [![Security](https://hakiri.io/github/chaps-io/public_activity/master.svg)](https://hakiri.io/github/chaps-io/public_activity/master)
+
+## [![](http://i.imgur.com/ya8Wnyl.png)](https://chaps.io) proudly made by [Chaps](https://chaps.io)
+
 
 `public_activity` provides easy activity tracking for your **ActiveRecord**, **Mongoid 3** and **MongoMapper** models
 in Rails 3 and 4.
 
 Simply put: it can record what happens in your application and gives you the ability to present those recorded activities to users - in a similar way to how GitHub does it.
 
-## Version notice
+## !! WARNING: README for unreleased version below. !!
 
-This documentation is for the unreleased 2.0 version. For the stable `1.4.X` readme see: https://github.com/pokonski/public_activity/blob/1-4-stable/README.md
+You probably don't want to read the docs for this unreleased version 2.0.
+
+*For the stable `1.5.X` readme see: https://github.com/chaps-io/public_activity/blob/1-5-stable/README.md*
 
 
 ## Table of contents
@@ -162,8 +167,6 @@ And in your views:
 <%= render_activities(@activities) %>
 ```
 
-*Note*: `render_activity` is a helper for use in view templates. `render_activity(activity)` can be written as `activity.render(self)` and it will have the same meaning.
-
 *Note*: `render_activities` is an alias for `render_activity` and does the same.
 
 #### Layouts
@@ -177,7 +180,7 @@ like a timestamp, owner's avatar etc:
 <%= render_activities(@activities, layout: :activity) %>
 ```
 
-The activity will be wrapped with the `app/views/layouts/_activity.erb` layout, in the above example.
+The activity will be wrapped with the `app/views/layouts/_activity.html.erb` layout, in the above example.
 
 **Important**: please note that layouts for activities are also partials. Hence the `_` prefix.
 
@@ -195,7 +198,7 @@ Sometimes, it's desirable to pass additional local variables to partials. It can
 
 `public_activity` looks for views in `app/views/public_activity`.
 
-For example, if you have an activity with `:key` set to `"activity.user.changed_avatar"`, the gem will look for a partial in `app/views/public_activity/user/_changed_avatar.(erb|haml|slim|something_else)`.
+For example, if you have an activity with `:key` set to `"activity.user.changed_avatar"`, the gem will look for a partial in `app/views/public_activity/user/_changed_avatar.html.(|erb|haml|slim|something_else)`.
 
 *Hint*: the `"activity."` prefix in `:key` is completely optional and kept for backwards compatibility, you can skip it in new projects.
 
@@ -205,7 +208,7 @@ If you would like to fallback to a partial, you can utilize the `fallback` param
 <%= render_activity(@activity, fallback: 'default') %>
 ```
 
-When used in this manner, if a partial with the specified `:key` cannot be located it will use the partial defined in the `fallback` instead. In the example above this would resolve to `public_activity/_default.(erb|haml|slim|something_else)`.
+When used in this manner, if a partial with the specified `:key` cannot be located it will use the partial defined in the `fallback` instead. In the example above this would resolve to `public_activity/_default.html.(|erb|haml|slim|something_else)`.
 
 If a view file does not exist then ActionView::MisingTemplate will be raised. If you wish to fallback to the old behaviour and use an i18n based translation in this situation you can specify a `:fallback` parameter of `text` to fallback to this mechanism like such:
 
@@ -231,11 +234,11 @@ This structure is valid for activities with keys `"activity.article.create"` or 
 
 ## Testing
 
-For RSpec you can first disable `public_activity` and add the `test_helper` in
-the `spec_helper.rb` with
+For RSpec you can first disable `public_activity` and add require helper methods in
+the `rails_helper.rb` with:
 
 ```ruby
-#spec_helper.rb
+#rails_helper.rb
 require 'public_activity/testing'
 
 PublicActivity.enabled = false
